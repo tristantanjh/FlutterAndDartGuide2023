@@ -14,7 +14,17 @@ class Background extends StatelessWidget {
           Image.asset(
             'assets/images/quiz-logo.png',
             width: 300,
+            color: Color.fromARGB(155, 255, 255, 255),
           ),
+
+          // Try not to use as it is performance intensive
+          // Opacity(
+          //   opacity: 0.6,
+          //   child: Image.asset(
+          //     'assets/images/quiz-logo.png',
+          //     width: 300,
+          //   ),
+          // ),
           const Padding(
               padding: EdgeInsets.all(40),
               child: Text('Learn Flutter the Fun way!',
