@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Background extends StatelessWidget {
-  const Background({super.key});
+class StartScreen extends StatelessWidget {
+  const StartScreen(this.startQuiz, {super.key});
 
-  void onPressed() {}
+  final void Function() startQuiz;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +14,8 @@ class Background extends StatelessWidget {
           Image.asset(
             'assets/images/quiz-logo.png',
             width: 300,
-            color: Color.fromARGB(155, 255, 255, 255),
+            color: const Color.fromARGB(155, 255, 255, 255),
           ),
-
           // Try not to use as it is performance intensive
           // Opacity(
           //   opacity: 0.6,
@@ -30,7 +29,7 @@ class Background extends StatelessWidget {
               child: Text('Learn Flutter the Fun way!',
                   style: TextStyle(color: Colors.white, fontSize: 28))),
           OutlinedButton.icon(
-              onPressed: onPressed,
+              onPressed: startQuiz,
               style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.all(10),
                   foregroundColor: Colors.white),
