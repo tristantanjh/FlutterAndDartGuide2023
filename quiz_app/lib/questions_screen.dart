@@ -19,19 +19,24 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
     return SizedBox(
       // alternative to using Center widget and mainAxisSize
       width: double.infinity, // takes up width of whole screen
-      child: Column(
-        mainAxisAlignment:
-            MainAxisAlignment.center, // aligns column to vertical center
-        children: [
-          Text(
-            currQn.question,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-          ),
-          const SizedBox(height: 30),
-          ...currQn.answers.map((text) {
-            return AnswerButton(text, () {});
-          }),
-        ],
+      child: Container(
+        margin: const EdgeInsets.all(40),
+        child: Column(
+          mainAxisAlignment:
+              MainAxisAlignment.center, // aligns column to vertical center
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              currQn.question,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
+            const SizedBox(height: 30),
+            ...currQn
+                .shuffledAnswers()
+                .map((text) => AnswerButton(text, () {})),
+          ],
+        ),
       ),
     );
   }
