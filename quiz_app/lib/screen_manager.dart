@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/data/questions.dart';
 import 'package:quiz_app/questions_screen.dart';
 import 'package:quiz_app/start_screen.dart';
 
-class Quiz extends StatefulWidget {
-  const Quiz({super.key});
+class ScreenManager extends StatefulWidget {
+  const ScreenManager({super.key});
 
   @override
-  State<Quiz> createState() {
-    return _QuizState();
+  State<ScreenManager> createState() {
+    return _ScreenManagerState();
   }
 }
 
-class _QuizState extends State<Quiz> {
+class _ScreenManagerState extends State<ScreenManager> {
   Widget? activeScreen;
+  List<String> selectedAnswers = [];
 
   // allows for initialization and thus passing functions to child widgets
   @override
@@ -23,8 +25,19 @@ class _QuizState extends State<Quiz> {
 
   void switchScreen() {
     setState(() {
-      activeScreen = const QuestionsScreen();
+      selectedAnswers = [];
+      activeScreen = QuestionsScreen(setAnswer);
     }); // lets you render new content by 'refreshing' the widget
+  }
+
+  void setAnswer(String answer) {
+    selectedAnswers.add(answer);
+
+    if (selectedAnswers.length == questions.length) {
+      setState(() {
+        activeScreen = StartScreen(() {});
+      });
+    }
   }
 
   @override
