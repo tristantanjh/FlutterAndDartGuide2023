@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/answer_button.dart';
 import 'package:quiz_app/data/questions.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({super.key});
@@ -12,9 +13,17 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
+  var currQnIndex = 0;
+
+  void answerQuestion() {
+    setState(() {
+      currQnIndex++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var currQn = questions[0];
+    var currQn = questions[currQnIndex];
 
     return SizedBox(
       // alternative to using Center widget and mainAxisSize
@@ -26,15 +35,17 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               MainAxisAlignment.center, // aligns column to vertical center
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              currQn.question,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-            ),
+            Text(currQn.question,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.lato(
+                  color: const Color.fromARGB(255, 237, 201, 245),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                )),
             const SizedBox(height: 30),
             ...currQn
                 .shuffledAnswers()
-                .map((text) => AnswerButton(text, () {})),
+                .map((text) => AnswerButton(text, answerQuestion)),
           ],
         ),
       ),
