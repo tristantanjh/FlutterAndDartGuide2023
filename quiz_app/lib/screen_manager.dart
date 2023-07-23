@@ -35,9 +35,16 @@ class _ScreenManagerState extends State<ScreenManager> {
 
     if (selectedAnswers.length == questions.length) {
       setState(() {
-        activeScreen = ResultsScreen(selectedAnswers);
+        activeScreen = ResultsScreen(selectedAnswers, restartQuiz);
       });
     }
+  }
+
+  void restartQuiz() {
+    setState(() {
+      activeScreen = StartScreen(switchScreen);
+      selectedAnswers = [];
+    });
   }
 
   @override
