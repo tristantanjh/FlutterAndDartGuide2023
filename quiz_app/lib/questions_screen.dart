@@ -46,7 +46,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                   fontWeight: FontWeight.bold,
                 )),
             const SizedBox(height: 30),
-            ...currQn.shuffledAnswers().map((text) => AnswerButton(text, () {
+            ...currQn.shuffledAnswers.map((text) => AnswerButton(text, () {
                   answerQuestion(text);
                 })),
           ],
