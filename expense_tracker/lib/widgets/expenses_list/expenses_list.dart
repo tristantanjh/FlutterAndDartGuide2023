@@ -3,15 +3,23 @@ import 'package:expense_tracker/widgets/expenses_list/expenses_item.dart';
 import 'package:flutter/material.dart';
 
 class ExpensesList extends StatelessWidget {
-  const ExpensesList(this.expenseList, {super.key});
+  const ExpensesList(this.expenseList, this.onRemoveExpense, {super.key});
 
   final List<Expense> expenseList;
+  final void Function(Expense expense) onRemoveExpense;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        // to dynamically generate long lists
-        itemCount: expenseList.length,
-        itemBuilder: (ctx, index) => ExpensesItem(expenseList[index]));
+      // to dynamically generate long lists
+      itemCount: expenseList.length,
+      itemBuilder: (ctx, index) => Dismissible(
+        key: ValueKey(expenseList[index]),
+        onDismissed: (direction) => onRemoveExpense(expenseList[index]),
+        child: ExpensesItem(
+          expenseList[index],
+        ),
+      ),
+    );
   }
 }

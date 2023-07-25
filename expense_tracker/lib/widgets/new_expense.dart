@@ -70,11 +70,14 @@ class _NewExpenseState extends State<NewExpense> {
       return;
     }
 
-    widget.onAddExpense(Expense(
-        title: enteredTitle,
-        amount: enteredPrice,
-        date: _chosenDate!,
-        category: _selectedCategory));
+    widget.onAddExpense(
+      Expense(
+          title: enteredTitle,
+          amount: enteredPrice,
+          date: _chosenDate!,
+          category: _selectedCategory),
+    );
+    Navigator.pop(context);
   }
 
   @override
