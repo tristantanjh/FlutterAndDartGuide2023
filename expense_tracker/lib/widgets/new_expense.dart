@@ -6,7 +6,9 @@ import 'package:expense_tracker/models/expense.dart';
 final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense(this.onAddExpense, {super.key});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<StatefulWidget> createState() {
@@ -67,6 +69,12 @@ class _NewExpenseState extends State<NewExpense> {
               ));
       return;
     }
+
+    widget.onAddExpense(Expense(
+        title: enteredTitle,
+        amount: enteredPrice,
+        date: _chosenDate!,
+        category: _selectedCategory));
   }
 
   @override

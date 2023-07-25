@@ -28,11 +28,17 @@ class _ExpensesState extends State<Expenses> {
     ),
   ];
 
-  void _addNewExpense() {
+  void _showNewExpenseModal() {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => const NewExpense(),
+      builder: (ctx) => NewExpense(_addExpense),
     );
+  }
+
+  void _addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
   }
 
   @override
@@ -40,7 +46,7 @@ class _ExpensesState extends State<Expenses> {
     return Scaffold(
       appBar: AppBar(title: const Text('Expense Tracker'), actions: [
         IconButton(
-          onPressed: _addNewExpense,
+          onPressed: _showNewExpenseModal,
           icon: const Icon(Icons.add),
         )
       ]),
