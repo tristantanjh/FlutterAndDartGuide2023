@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_internals/keys/keys.dart';
 import 'package:flutter_internals/states/ui_updates_demo.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class App extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Flutter Internals'),
         ),
-        body: const UIUpdatesDemo(),
+        body: const Keys(),
       ),
     );
   }

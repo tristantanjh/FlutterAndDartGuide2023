@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_internals/demobuttons.dart';
+import 'package:flutter_internals/states/demobuttons.dart';
 
 class UIUpdatesDemo extends StatelessWidget {
   const UIUpdatesDemo({super.key});
