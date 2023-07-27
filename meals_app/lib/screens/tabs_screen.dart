@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/screens/categories_screen.dart';
 import 'package:meals_app/screens/meals_screen.dart';
+import 'package:meals_app/widgets/main_drawer.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -25,7 +26,7 @@ class _TabsScreenState extends State<TabsScreen> {
     );
   }
 
-  void _selectPage(int index) {
+  void _selectPageFromNav(int index) {
     setState(() {
       selectedPageIndex = index;
     });
@@ -46,6 +47,19 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
+  void _setScreenFromDrawer(String id) {
+    if (id == 'meals') {
+      Navigator.pop(context);
+    } else {}
+    // Navigator.push(context, MaterialPageRoute(
+    //     builder: (ctx) => MealsScreen(
+    //       category.title,
+    //       selectedMeals,
+    //       onToggleFavorite,
+    //     ),
+    //   ),)
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget activePage = CategoriesScreen(_changeFavoriteStatus);
@@ -60,9 +74,10 @@ class _TabsScreenState extends State<TabsScreen> {
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
+      drawer: MainDrawer(_setScreenFromDrawer),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
+        onTap: _selectPageFromNav,
         currentIndex: selectedPageIndex,
         items: const [
           BottomNavigationBarItem(
