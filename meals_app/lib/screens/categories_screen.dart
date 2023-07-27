@@ -1,10 +1,22 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meals_app/data/dummy_data.dart';
+import 'package:meals_app/screens/meals_screen.dart';
 import 'package:meals_app/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
+
+  void _selectCategory(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => const MealsScreen(
+          'Title',
+          [],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +33,13 @@ class CategoriesScreen extends StatelessWidget {
           crossAxisSpacing: 20, // horizontal spacinng
           mainAxisSpacing: 20, // vertical spacing
         ),
-        children: [for (final c in availableCategories) CategoryGridItem(c)],
+        children: [
+          for (final c in availableCategories)
+            CategoryGridItem(
+              c,
+              () => _selectCategory(context),
+            ),
+        ],
       ),
     );
   }
