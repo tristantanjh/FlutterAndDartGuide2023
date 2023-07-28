@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/screens/tabs_screen.dart';
-import 'package:meals_app/widgets/main_drawer.dart';
+// import 'package:meals_app/screens/tabs_screen.dart';
+// import 'package:meals_app/widgets/main_drawer.dart';
 
 enum Filter {
   glutenFree,
@@ -10,7 +10,9 @@ enum Filter {
 }
 
 class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({super.key});
+  const FiltersScreen(this.currentFilters, {super.key});
+
+  final Map<Filter, bool> currentFilters;
 
   @override
   State<StatefulWidget> createState() {
@@ -25,11 +27,21 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _veganChecker = false;
 
   @override
+  void initState() {
+    super.initState();
+    _glutenFreeChecker = widget.currentFilters[Filter.glutenFree]!;
+    _lactoseFreeChecker = widget.currentFilters[Filter.lactoseFree]!;
+    _vegetarianChecker = widget.currentFilters[Filter.vegetarian]!;
+    _veganChecker = widget.currentFilters[Filter.vegan]!;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Filters'),
       ),
+      // Make it a drawer instead of back button
       // drawer: MainDrawer((id) {
       //   Navigator.pop(context);
       //   if (id == 'meals') {
