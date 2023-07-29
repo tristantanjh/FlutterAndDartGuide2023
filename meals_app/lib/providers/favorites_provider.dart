@@ -6,14 +6,16 @@ class FavoriteMealsNotifier extends StateNotifier<List<Meal>> {
   FavoriteMealsNotifier() : super([]);
 
   // states are immutable in this package, need to overwrite
-  void changeFavoriteStatus(Meal meal) {
+  bool changeFavoriteStatus(Meal meal) {
     final isFavorite = state.contains(meal);
     if (isFavorite) {
       state = state
           .where((m) => m.id != meal.id)
           .toList(); // removes the matching meal
+      return false;
     } else {
       state = [...state, meal]; // add meal
+      return true;
     }
   }
 }
