@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/providers/filters_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals_app/screens/tabs_screen.dart';
+import 'package:meals_app/widgets/main_drawer.dart';
 
 class FiltersScreen extends ConsumerWidget {
   const FiltersScreen({super.key});
@@ -14,17 +16,17 @@ class FiltersScreen extends ConsumerWidget {
         title: const Text('Your Filters'),
       ),
       // Make it a drawer instead of back button
-      // drawer: MainDrawer((id) {
-      //   Navigator.pop(context);
-      //   if (id == 'meals') {
-      //     Navigator.pushReplacement(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (ctx) => const TabsScreen(),
-      //       ),
-      //     );
-      //   }
-      // }),
+      drawer: MainDrawer((id) {
+        Navigator.pop(context);
+        if (id == 'meals') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (ctx) => const TabsScreen(),
+            ),
+          );
+        }
+      }),
       body: Column(
         children: [
           SwitchListTile(
