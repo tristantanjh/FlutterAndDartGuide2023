@@ -17,6 +17,10 @@ class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
           Filter.vegan: false,
         });
 
+  void setAllFilters(Map<Filter, bool> chosenFilters) {
+    state = chosenFilters;
+  }
+
   void setFilter(Filter filter, bool isOn) {
     state = {
       ...state, // copies previous values over
