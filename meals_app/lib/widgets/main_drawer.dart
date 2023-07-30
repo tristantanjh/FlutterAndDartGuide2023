@@ -34,11 +34,17 @@ class MainDrawer extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              Text(
-                'Cooking',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                ),
+                child: Text(
+                  'Chef Curry Cooks',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 24,
+                      ),
+                ),
               )
             ]),
           ),
