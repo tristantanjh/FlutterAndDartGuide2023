@@ -8,6 +8,7 @@ enum Filter {
   vegan,
 }
 
+// Filters Provider section
 class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
   FiltersNotifier()
       : super({
@@ -31,8 +32,10 @@ class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
 
 final filtersProvider =
     StateNotifierProvider<FiltersNotifier, Map<Filter, bool>>(
-        (ref) => FiltersNotifier());
+  (ref) => FiltersNotifier(),
+);
 
+// Filtered Meals Provider section
 final filteredMealsProvider = Provider((ref) {
   final meals = ref.watch(mealsProvider);
   final activeFilters = ref.watch(filtersProvider);
