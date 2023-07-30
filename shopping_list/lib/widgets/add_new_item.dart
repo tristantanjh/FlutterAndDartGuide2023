@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shopping_list/data/category_data.dart';
+import 'package:shopping_list/models/category.dart';
+import 'package:shopping_list/models/grocery_item.dart';
 
 class AddNewItem extends StatefulWidget {
   const AddNewItem({super.key});
@@ -11,10 +13,22 @@ class AddNewItem extends StatefulWidget {
 
 class _AddNewItemState extends State<AddNewItem> {
   final _formKey = GlobalKey<FormState>();
+  var _enteredName = '';
+  var _enteredQuant = 1;
+  var _selectedCategory = categories[Categories.vegetables]!;
 
   void _saveItem() {
     // Allows validation and error messages to be shown
-    _formKey.currentState!.validate();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      Navigator.of(context).pop(
+        GroceryItem(
+            id: DateTime.now().toString(),
+            name: _enteredName,
+            quantity: _enteredQuant,
+            category: _selectedCategory),
+      );
+    }
   }
 
   @override
@@ -43,6 +57,7 @@ class _AddNewItemState extends State<AddNewItem> {
                   }
                   return null;
                 },
+                onSaved: (value) => _enteredName = value!,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -67,6 +82,7 @@ class _AddNewItemState extends State<AddNewItem> {
                         }
                         return null;
                       },
+                      onSaved: (value) => _enteredQuant = int.parse(value!),
                     ),
                   ),
                   const SizedBox(
@@ -74,6 +90,7 @@ class _AddNewItemState extends State<AddNewItem> {
                   ),
                   Expanded(
                     child: DropdownButtonFormField(
+                      value: _selectedCategory,
                       items: [
                         for (final category in categories.entries)
                           DropdownMenuItem(
@@ -92,7 +109,11 @@ class _AddNewItemState extends State<AddNewItem> {
                             ),
                           ),
                       ],
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedCategory = value!;
+                        });
+                      },
                     ),
                   ),
                 ],
