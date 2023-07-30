@@ -22,6 +22,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   void initState() {
     super.initState();
 
+    // animation controller for explicit animation in initstate
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
