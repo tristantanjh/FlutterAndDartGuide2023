@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shopping_list/data/category_data.dart';
 
 class AddNewItem extends StatefulWidget {
@@ -9,6 +10,13 @@ class AddNewItem extends StatefulWidget {
 }
 
 class _AddNewItemState extends State<AddNewItem> {
+  final _formKey = GlobalKey<FormState>();
+
+  void _saveItem() {
+    // Allows validation and error messages to be shown
+    _formKey.currentState!.validate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +26,7 @@ class _AddNewItemState extends State<AddNewItem> {
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
@@ -25,7 +34,15 @@ class _AddNewItemState extends State<AddNewItem> {
                 decoration: const InputDecoration(
                   label: Text('Name'),
                 ),
-                validator: ((value) => 'Test'),
+                validator: (value) {
+                  if (value == null ||
+                      value.isEmpty ||
+                      value.trim().length <= 1 ||
+                      value.trim().length > 50) {
+                    return 'Name of item must be between 1 and 50 characters long!';
+                  }
+                  return null;
+                },
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -35,7 +52,21 @@ class _AddNewItemState extends State<AddNewItem> {
                       decoration: const InputDecoration(
                         label: Text('Quantity'),
                       ),
+                      keyboardType: TextInputType.number,
                       initialValue: '1',
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^[1-9]\d*$')), // Regex to allow positive numbers only
+                      ],
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            int.tryParse(value) == null ||
+                            int.tryParse(value)! <= 0) {
+                          return 'Enter a valid positive number!';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -65,7 +96,26 @@ class _AddNewItemState extends State<AddNewItem> {
                     ),
                   ),
                 ],
-              )
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      // resets state of form
+                      _formKey.currentState!.reset();
+                    },
+                    child: const Text('Reset'),
+                  ),
+                  ElevatedButton(
+                    onPressed: _saveItem,
+                    child: const Text('Add Item'),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
