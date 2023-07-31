@@ -45,16 +45,11 @@ class _AddNewItemState extends State<AddNewItem> {
         ),
       );
 
-      print(response.body);
-      print(response.statusCode);
-
       if (!context.mounted) {
         return;
       }
 
       final Map<String, dynamic> resData = json.decode(response.body);
-
-      // Navigator.of(context).pop();
 
       Navigator.of(context).pop(
         GroceryItem(
