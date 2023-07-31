@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:shopping_list/data/category_data.dart';
 import 'package:shopping_list/models/category.dart';
 import 'package:shopping_list/models/grocery_item.dart';
@@ -21,13 +24,27 @@ class _AddNewItemState extends State<AddNewItem> {
     // Allows validation and error messages to be shown
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      Navigator.of(context).pop(
-        GroceryItem(
-            id: DateTime.now().toString(),
-            name: _enteredName,
-            quantity: _enteredQuant,
-            category: _selectedCategory),
+      final url = Uri.https(
+          'flutter-course-206de-default-rtdb.asia-southeast1.firebasedatabase.app',
+          'shopping-list.json');
+      http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'name': _enteredName,
+          'quantity': _enteredQuant,
+          'category': _selectedCategory.name,
+        }),
       );
+      // Navigator.of(context).pop(
+      //   GroceryItem(
+      //       id: DateTime.now().toString(),
+      //       name: _enteredName,
+      //       quantity: _enteredQuant,
+      //       category: _selectedCategory),
+      // );
     }
   }
 
