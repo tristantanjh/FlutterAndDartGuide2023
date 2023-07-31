@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shopping_list/data/category_data.dart';
+import 'package:shopping_list/models/category.dart';
 // import 'package:shopping_list/data/dummy_items.dart';
 import 'package:shopping_list/models/grocery_item.dart';
 import 'package:shopping_list/widgets/add_new_item.dart';
@@ -11,22 +16,50 @@ class GroceryList extends StatefulWidget {
 }
 
 class _GroceryListState extends State<GroceryList> {
-  final List<GroceryItem> _groceryItems = [];
+  List<GroceryItem> _groceryItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadItems();
+  }
+
+  void _loadItems() async {
+    final url = Uri.https(
+        'flutter-course-206de-default-rtdb.asia-southeast1.firebasedatabase.app',
+        'shopping-list.json');
+
+    final response = await http.get(url);
+    final Map<String, dynamic> groceryListData = json.decode(response.body);
+    final List<GroceryItem> loadedItems = [];
+    for (final item in groceryListData.entries) {
+      // find the matching category as only the category title was send in post req
+      final category = categories.entries
+          .firstWhere((catItem) => catItem.value.name == item.value['category'])
+          .value;
+      loadedItems.insert(
+        0,
+        GroceryItem(
+          id: item.key,
+          name: item.value['name'],
+          quantity: item.value['quantity'],
+          category: category,
+        ),
+      );
+    }
+    setState(() {
+      _groceryItems = loadedItems;
+    });
+  }
 
   void _addItem() async {
-    final toBeAdded = await Navigator.of(context).push<GroceryItem>(
+    await Navigator.of(context).push<GroceryItem>(
       MaterialPageRoute(
         builder: (ctx) => const AddNewItem(),
       ),
     );
 
-    if (toBeAdded == null) {
-      return;
-    }
-
-    setState(() {
-      _groceryItems.add(toBeAdded);
-    });
+    _loadItems();
   }
 
   void _removeItem(GroceryItem item) {
