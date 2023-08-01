@@ -10,3 +10,16 @@ class Place {
   final String title;
   final File image;
 }
+
+class PlaceLocation {
+  PlaceLocation({
+    required this.latitude,
+    required this.longitude,
+    required this.address,
+  }) : id = uuid.v4();
+
+  final String id;
+  final double latitude;
+  final double longitude;
+  final String address;
+}
