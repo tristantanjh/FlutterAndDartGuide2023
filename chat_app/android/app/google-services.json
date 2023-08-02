@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "943737878340",
+    "firebase_url": "https://flutter-course-206de-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "flutter-course-206de",
+    "storage_bucket": "flutter-course-206de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943737878340:android:82acc42539b61aab798911",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943737878340-n4cekfgilis05uc9qej5f7gfuulsi8l9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqq-pNjl2ToM4iQvDezdgeZh2ji2VK9_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943737878340-n4cekfgilis05uc9qej5f7gfuulsi8l9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "943737878340-d077ugmlcdmhg2g4v0hhfqr93bf5kllu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
