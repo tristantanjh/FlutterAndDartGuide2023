@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:chat_app/widgets/image_selector.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -15,11 +19,12 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isLoginState = true;
   var _enteredEmail = '';
   var _enteredPassword = '';
+  File? _enteredImage;
 
   void _submit() async {
     final isValid = _formKey.currentState!.validate();
 
-    if (!isValid) {
+    if (!isValid || !_isLoginState && _enteredImage == null) {
       return;
     }
 
@@ -32,6 +37,14 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         final credentials = await _firebase.createUserWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
+
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('user_images')
+            .child('${credentials.user!.uid}.jpg');
+
+        await storageRef.putFile(_enteredImage!);
+        final imageURL = await storageRef.getDownloadURL();
       }
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -72,6 +85,10 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if (!_isLoginState)
+                            ImageSelector((selectedImage) {
+                              _enteredImage = selectedImage;
+                            }),
                           TextFormField(
                             decoration: const InputDecoration(
                               labelText: 'Email Address',
