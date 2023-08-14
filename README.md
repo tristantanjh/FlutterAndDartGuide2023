@@ -132,6 +132,7 @@ flutter pub get
 flutter run
 ```
 
+---
 
 ### Acknowledgment
 Maximilian Schwarzmüller for his comprehensive Flutter and Dart course, which served as the foundation for all the projects found here. Visit his Udemy profile [here](https://www.udemy.com/user/maximilian-schwarzmuller/)!
